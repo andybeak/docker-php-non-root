@@ -1,0 +1,26 @@
+version: '3'
+services:
+
+  php:
+    build:
+      context: ./images
+      dockerfile: php.docker
+    container_name: php
+    user: ${CURRENT_UID}
+    restart: always
+    volumes:
+      - '../src/:/code'
+      - './config/php/php.ini-production:/usr/local/etc/php'
+
+  webserver:
+    image: 'nginx:latest'
+    user: ${CURRENT_UID}
+    depends_on:
+    - php
+    restart: always
+    ports:
+      - "80:8000"
+    volumes:
+      - '../src/:/code'
+      - './config/nginx/nginx_default_site.conf:/etc/nginx/conf.d/default.conf'
+      - './config/nginx/nginx.conf:/etc/nginx/nginx.conf'
