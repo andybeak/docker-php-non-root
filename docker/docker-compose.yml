@@ -10,7 +10,7 @@ services:
     restart: always
     volumes:
       - '../src/:/code'
-      - './config/php/php.ini-production:/usr/local/etc/php'
+      - './config/php/php.ini-production:/usr/local/etc/php/php.ini'
 
   webserver:
     image: 'nginx:latest'
